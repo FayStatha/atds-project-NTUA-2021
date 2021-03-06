@@ -29,11 +29,7 @@ movies = \
         sc.textFile("hdfs://master:9000/movies/movies.csv"). \
         filter(lambda x : split_complex(x)[3][0:4] != '' and split_complex(x)[2] != '' and int(split_complex(x)[3][0:4]) >= 2000 and int(split_complex(x)[3][0:4]) <= 2019). \
         map(lambda x : (split_complex(x)[0], (find_quinquennium(int(split_complex(x)[3][0:4])), len(split_complex(x)[2].split(" ")))))
-'''
-        map(lambda x : (x.split(",")[1], (float(x.split(",")[2]), 1))). \
-        reduceByKey(lambda x, y : (x[0]+y[0], x[1]+y[1]) ). \
-        map(lambda x : (x[0], x[1][0] / x[1][1]))
-'''
+
 res = genres.join(movies). \
         map(lambda x : (x[1][1][0], ((x[1][1][1], 1)))). \
         reduceByKey(lambda x, y : (x[0]+y[0], x[1]+y[1]) ). \
@@ -43,3 +39,4 @@ res = genres.join(movies). \
 
 for i in res:
         print(i)
+
