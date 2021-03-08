@@ -22,4 +22,4 @@ res = genres.join(ratings). \
         map(lambda x : (x[0], x[1][0] / x[1][1], x[1][1])).collect()
 
 for i in res:
-        print(i)
+	print(i)
