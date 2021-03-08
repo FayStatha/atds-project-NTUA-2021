@@ -18,11 +18,11 @@ Because of that, I am trying to describe the tasks in this file.
 
 ### PART A
 
-Part A is about writing queries using either RDD API, or Spark SQL, on this [dataset](https://ntuagr-my.sharepoint.com/:u:/g/personal/el16190_ntua_gr/EediLa79Da9Kjck19kFo9k0BXlzzvpCrR2tJNv3JI3hL0w?e=OKXHYV). 
+Part A is about writing queries using either RDD API, or Spark SQL, on this [dataset](https://ntuagr-my.sharepoint.com/:u:/g/personal/el16190_ntua_gr/EediLa79Da9Kjck19kFo9k0BXlzzvpCrR2tJNv3JI3hL0w?e=KFaOdk). 
 
 Spark SQL queries need to work both with .csv files and with .parquet files.
 
-**mporw na ftiaksw ena table me ta queries sta agglika**
+**mporw na ftiaksw ena table me ta queries sta agglika**000
 
 ### PART B
 
