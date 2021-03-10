@@ -8,7 +8,7 @@ The main purpose of the project is to familirize the student with the use of [Ap
 
 - [Efstathia Statha](https://github.com/FayStatha), fay.statha@gmail.com
 
-- [Eleni Oikonomou](https://github.com/EleniOik), email
+- [Eleni Oikonomou](https://github.com/EleniOik), elecon16@gmail.com
 
 ## Assignement
 
