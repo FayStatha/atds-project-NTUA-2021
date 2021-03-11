@@ -1,7 +1,6 @@
 from pyspark.sql import SparkSession
 from io import StringIO
-import csv
-import sys
+import csv, sys, time
 
 spark = SparkSession.builder.appName("broadcast-join").getOrCreate()
 
@@ -33,13 +32,21 @@ table1 = \
         sc.textFile(file1). \
         map(lambda x : x.split(',')).collect()
 
-table_broad = sc.broadcast(table1)
-
 table2 = \
         sc.textFile(file2). \
         map(lambda x : (x.split(','))). \
-        map(lambda x : (x.pop(key2_index), x)). \
+        map(lambda x : (x.pop(key2_index), x))
+
+start = time.time()
+
+table_broad = sc.broadcast(table1)
+
+joined_table = table2. \
         flatMap(lambda x : join(x)).collect()
 
-for i in table2:
+end = time.time()
+
+for i in joined_table:
         print(i)
+
+print("\n\n Time for join: %.4f seconds\n\n"%(end-start))

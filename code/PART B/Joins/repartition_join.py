@@ -40,11 +40,17 @@ table2 = \
         map(lambda x : (x.split(','))). \
         map(lambda x : (x.pop(key2_index), ('t2', x)))
 
-table3 = \
+start = time.time()
+
+joined_table = \
         table1.union(table2). \
         groupByKey(). \
         flatMapValues(lambda x : join(x)). \
         map(lambda x : (x[0], x[1][0][1], x[1][1][1])).collect()
 
-for i in table3:
+end = time.time()
+
+for i in joined_table:
         print(i)
+
+print("\n\n Time for join: %.4f seconds\n\n"%(end-start))
