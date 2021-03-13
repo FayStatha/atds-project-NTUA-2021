@@ -15,6 +15,7 @@ def join(x):
     return result
 
 # The user must give the file path of each file as input with the index of the key for each one
+# the small file must be given first
 
 # For example:
 # spark-submit repartition_join.py "hdfs://master:9000/movies/movie-genres-100.csv" 0 "hdfs://master:9000/movies/ratings.csv" 1
