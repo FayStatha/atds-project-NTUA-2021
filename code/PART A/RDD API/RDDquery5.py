@@ -9,7 +9,6 @@ sc = spark.sparkContext
 def split_complex(x):
         return list(csv.reader(StringIO(x), delimiter=','))[0]
 
-
 genres = \
         sc.textFile("hdfs://master:9000/movies/movie_genres.csv"). \
         map(lambda x : (x.split(",")[0], x.split(",")[1]))
@@ -18,13 +17,12 @@ ratings = \
         sc.textFile("hdfs://master:9000/movies/ratings.csv"). \
         map(lambda x : (x.split(",")[1], x.split(",")[0]))
 
-
 category_ratings = genres.join(ratings). \
         map(lambda x : (x[1] , 1)). \
         reduceByKey(lambda x, y: x+y). \
         map(lambda x : (x[0][0], (x[0][1], x[1]))). \
         reduceByKey(lambda x, y: x if x[1]>y[1] else y). \
-        map(lambda x : (x[1][0], (x[0], x[1][1])))
+        map(lambda x : ((x[0] ,x[1][0]), x[1][1]))
 
 movie_popularity = \
         sc.textFile("hdfs://master:9000/movies/movies.csv"). \
@@ -33,22 +31,23 @@ movie_popularity = \
 user_movie_ratings = \
 	sc.textFile("hdfs://master:9000/movies/ratings.csv"). \
         map(lambda x : (x.split(",")[1], (x.split(",")[0], float(x.split(",")[2])))). \
-	join(movie_popularity). \
-	map(lambda x : (x[1][0][0], (x[1][1][0], x[1][0][1], x[1][1][1])))
+        join(movie_popularity). \
+        map(lambda x : (x[0], (x[1][0][0], x[1][1][0], x[1][0][1], x[1][1][1]))). \
+	join(genres). \
+	map(lambda x : ((x[1][1], x[1][0][0]), (x[1][0][1], x[1][0][2], x[1][0][3]))) 
 
 user_fav_movie = \
-	user_movie_ratings.reduceByKey(lambda x, y: x if x[1] > y[1] or (x[1] == y[1] and x[2] > y[2]) else y)
+        user_movie_ratings.reduceByKey(lambda x, y: x if x[1] > y[1] or (x[1] == y[1] and x[2] > y[2]) else y)
 
 user_worst_movie = \
         user_movie_ratings.reduceByKey(lambda x, y: x if x[1] < y[1] or (x[1] == y[1] and x[2] > y[2]) else y)
 
-user_fav_worst_movie = \
-	user_fav_movie.join(user_worst_movie). \
-	map(lambda x : (x[0], (x[1][0][0], x[1][0][1], x[1][1][0], x[1][1][1])))
-
-res = category_ratings.join(user_fav_worst_movie). \
-	map(lambda x : (x[1][0][0], x[0], x[1][0][1], x[1][1][0], x[1][1][1], x[1][1][2], x[1][1][3])). \
-	sortBy(lambda x: x[1], ascending = True).collect()
+res = \
+        user_fav_movie.join(user_worst_movie). \
+        map(lambda x : (x[0], (x[1][0][0], x[1][0][1], x[1][1][0], x[1][1][1]))). \
+	join(category_ratings). \
+	map(lambda x : (x[0][0], x[0][1], x[1][1], x[1][0][0], x[1][0][1], x[1][0][2], x[1][0][3])). \
+        sortBy(lambda x : x[0], ascending = True).collect()
 
 for i in res:
-	print(i)
+        print(i)
