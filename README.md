@@ -12,7 +12,7 @@ The main purpose of the project is to familirize the student with the use of [Ap
 
 ## Assignement
 
-The assignement language is Greek, because that is the main language of this course. 
+The assignement's and report's language is Greek, because that is the main language of this course. 
 
 Because of that, I am trying to describe the tasks in this file.
 

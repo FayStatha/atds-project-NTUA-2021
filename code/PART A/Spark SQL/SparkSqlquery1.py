@@ -3,14 +3,14 @@ from pyspark.sql import SparkSession
 import datetime, sys
 from pyspark.sql.functions import year, month, dayofmonth
 
-spark = SparkSession.builder.appName("query1-rdd").getOrCreate()
+spark = SparkSession.builder.appName("query1-SparkSQL").getOrCreate()
 
 sc = spark.sparkContext
 
 # The user must give the input format (csv || parquet)
 
 # For example:
-# spark-submit SparkSqlquery1-csv.py csv
+# spark-submit SparkSqlquery1.py csv
 # to read csv file
 
 input_format = sys.argv[1]

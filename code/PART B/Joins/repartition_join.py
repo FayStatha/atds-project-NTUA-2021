@@ -1,7 +1,7 @@
 import csv
 import sys
 
-spark = SparkSession.builder.appName("skatoules").getOrCreate()
+spark = SparkSession.builder.appName("repartition-join").getOrCreate()
 
 sc = spark.sparkContext
 

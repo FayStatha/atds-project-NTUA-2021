@@ -6,7 +6,7 @@ spark = SparkSession.builder.appName("query2-SparkSql").getOrCreate()
 # The user must give the input format (csv || parquet)
 
 # For example:
-# spark-submit SparkSqlquery2-csv.py csv
+# spark-submit SparkSqlquery2.py csv
 # to read csv file
 
 input_format = sys.argv[1]

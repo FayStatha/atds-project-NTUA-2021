@@ -1,13 +1,19 @@
 from pyspark.sql import SparkSession
 import sys
-spark = SparkSession.builder.appName("Query3_DFAPI").getOrCreate()
+spark = SparkSession.builder.appName("Query5-SparkSQL").getOrCreate()
+
+# The user must give the input format (csv || parquet)
+
+# For example:
+# spark-submit SparkSqlquery5.py csv
+# to read csv file
 
 input_format = sys.argv[1]
 
 if input_format == 'parquet':
-        movie_genres = spark.read.parquet("hdfs://master:9000/movies/movie_genres.parquet") #returns a dataframe that contains ratings table 
-        movies = spark.read.parquet("hdfs://master:9000/movies/movies.parquet") #returns a dataframe that contains ratings table 
-        ratings = spark.read.parquet("hdfs://master:9000/movies/ratings.parquet") #returns a dataframe that contains rating table 
+        movie_genres = spark.read.parquet("hdfs://master:9000/movies/movie_genres.parquet") 
+        movies = spark.read.parquet("hdfs://master:9000/movies/movies.parquet") 
+        ratings = spark.read.parquet("hdfs://master:9000/movies/ratings.parquet")  
 else:
         movies = spark.read.option("header","false").option("delimiter",",").option("inferSchema","true").csv("hdfs://master:9000/movies/movies.csv")
         movie_genres = spark.read.option("header","false").option("delimiter",",").option("inferSchema","true").csv("hdfs://master:9000/movies/movie_genres.csv")

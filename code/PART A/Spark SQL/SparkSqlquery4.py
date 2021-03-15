@@ -1,14 +1,14 @@
 from pyspark.sql import SparkSession
 import sys
 
-spark = SparkSession.builder.appName("query2-SparkSql").getOrCreate()
+spark = SparkSession.builder.appName("query4-SparkSql").getOrCreate()
 
 input_format = sys.argv[1]
 
 # The user must give the input format (csv || parquet)
 
 # For example:
-# spark-submit SparkSqlquery4-csv.py csv
+# spark-submit SparkSqlquery4.py csv
 # to read csv file
 
 if input_format == 'parquet':
